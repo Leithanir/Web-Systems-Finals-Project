@@ -132,13 +132,13 @@ class Controller{
         $id = $_POST['id'];
         echo $id;
 
-        $id = intval($_POST['id']);
+        $id = intval($_POST['id_number']);
 
-        $sql = "DELETE FROM users WHERE id = ?";
+        $sql = "DELETE FROM users WHERE id_number = ?";
         $stmt = $this->connection->prepare($sql);
 
         if($stmt){
-         $stmt ->bind_param("i", $id);
+         $stmt ->bind_param("i", $id_number);
 
          if($stmt->execute()){
             $LOCATION = "/System/Web-Systems-Finals-Project/FRONTEND/Admin_page.php";
@@ -151,7 +151,7 @@ class Controller{
     //anti-dupe func
     public function dupeEmail($email) {
         
-        $sql = "SELECT id FROM users WHERE email = ?";
+        $sql = "SELECT id_number FROM users WHERE email = ?";
         $stmt = $this->connection->prepare($sql);
         $stmt->bind_param("s", $email);
         $stmt->execute();
@@ -187,7 +187,8 @@ class Controller{
 }
     
     public function create(){
-       $full_name = $_POST['fullName'];
+        $id_number = $_POST['idNumber'];
+        $full_name = $_POST['fullName'];
         $email = $_POST['email'];
         $role = $_POST['userRole'];
         $course = $_POST['course'];
@@ -199,9 +200,9 @@ class Controller{
         exit();
     }
         
-        $sql="INSERT INTO users (full_name, email, role, course, year, section ) VALUES(?, ?, ?, ?, ?, ?)";
+        $sql="INSERT INTO users (id_number, full_name, email, role, course, year, section ) VALUES(?, ?, ?, ?, ?, ?, ?)";
         $stmt = $this->connection->prepare($sql);
-        $stmt->bind_param("ssssss", $full_name, $email, $role, $course, $year, $section);
+        $stmt->bind_param("issssss", $id_number,$full_name, $email, $role, $course, $year, $section);
 
         if($stmt->execute()){
             $location = "/System/Web-Systems-Finals-Project/FRONTEND/Admin_page.php?success=1";

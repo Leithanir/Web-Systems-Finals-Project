@@ -195,7 +195,7 @@ $counts = $controller->roleCount();
                             foreach($users as $user):
                                 ?>
                         <tr>
-                            <td><?=htmlspecialchars($user['id'])?></td>
+                            <td><?=htmlspecialchars($user['id_number'])?></td>
                             <td><?=htmlspecialchars($user['full_name'])?></td>
                             <td><?=htmlspecialchars($user['email'])?></td>
                             <td><?=htmlspecialchars($user['role'])?></td>
@@ -203,12 +203,12 @@ $counts = $controller->roleCount();
                             <td></td>
                             <td>
                                 <form action ="/System/Web-Systems-Finals-Project/BACKEND/Controller.php?method_finder=edit" method="post" style="display:inline;">
-                                    <input type="hidden" name="id" value="<?=htmlspecialchars($user['id'])?>">
-                                    <a href="/System/Web-Systems-Finals-Project/BACKEND/Update_page.php?id=<?= htmlspecialchars($user['id']) ?>" class="btn btn-primary">Edit</a>
+                                    <input type="hidden" name="id" value="<?=htmlspecialchars($user['id_number'])?>">
+                                    <a href="/System/Web-Systems-Finals-Project/BACKEND/Update_page.php?id=<?= htmlspecialchars($user['id_number']) ?>" class="btn btn-primary">Edit</a>
 
                                 </form>
                                 <form action ="/System/Web-Systems-Finals-Project/BACKEND/Controller.php?method_finder=delete" method="post" style="display:inline;">
-                                    <input type="hidden" name="id" value="<?=htmlspecialchars($user['id'])?>">
+                                    <input type="hidden" name="id" value="<?=htmlspecialchars($user['id_number'])?>">
                                     <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this user?');">Delete</button>
                                     </form>
                             </td>
