@@ -187,8 +187,7 @@ class Controller{
 }
     
     public function create(){
-
-        $full_name = $_POST['fullName'];
+       $full_name = $_POST['fullName'];
         $email = $_POST['email'];
         $role = $_POST['userRole'];
         $course = $_POST['course'];
