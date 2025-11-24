@@ -1,3 +1,9 @@
+<?php
+include("../BACKEND/Controller.php");
+include("../FRONTEND/Admin_page.php");
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

@@ -136,7 +136,7 @@ $counts = $controller->roleCount();
                     <button class="tab-button" data-role="teacher">Teacher</button>
                     <button class="tab-button" data-role="student">Student</button>
                 </div>
-                <select id="classSectionSelect" disabled>
+                <select id="classSectionSelect" >
                     <option value="all" selected>All Sections</option>
                     <!-- Sections -->
                     <option value="BSIT-1A">BSIT-1A</option>
@@ -199,7 +199,7 @@ $counts = $controller->roleCount();
                             <td><?=htmlspecialchars($user['full_name'])?></td>
                             <td><?=htmlspecialchars($user['email'])?></td>
                             <td><?=htmlspecialchars($user['role'])?></td>
-                            <td><?=htmlspecialchars($user['course'] . ' ' . $user['year'] . '-' . $user['section'])?></td>
+                            <td><?=htmlspecialchars($user['course'] . '  ' . $user['year'] . ' - ' . $user['section'])?></td>
                             <td></td>
                             <td>
                                 <form action ="/System/Web-Systems-Finals-Project/BACKEND/Controller.php?method_finder=edit" method="post" style="display:inline;">
