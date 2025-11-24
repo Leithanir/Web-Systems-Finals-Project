@@ -73,8 +73,8 @@ class Controller{
         $updatedYear = $_POST['newYear'];
 
         //if our id is not null
-        if($id){
-            $sql = "UPDATE users SET full_name = ?, email = ?, role = ?, course = ?, year = ?, section = ? WHERE id = ?";
+        if($id === ''){
+            $sql = "UPDATE users SET full_name = ?, email = ?, role = ?, course = ?, year = ?, section = ? WHERE id_number = ?";
             $stmt = $this->connection->prepare($sql);
 
             if($stmt){
@@ -109,13 +109,13 @@ class Controller{
         exit();
     }
 
-    public function take_info_by_id($id){
-        $sql = "SELECT * FROM users WHERE id = ?";
+    public function take_info_by_id($id_number){
+        $sql = "SELECT * FROM users WHERE id_number = ?";
         $stmt = $this->connection->prepare($sql);
         
         if ($stmt) {
             
-            $stmt->bind_param("i", $id);
+            $stmt->bind_param("i", $id_number);
             if($stmt->execute()){
                 $result = $stmt->get_result();
                 return $result->fetch_assoc();
@@ -129,24 +129,31 @@ class Controller{
     }
 
     public function delete(){
-        $id = $_POST['id'];
-        echo $id;
-
-        $id = intval($_POST['id_number']);
-
-        $sql = "DELETE FROM users WHERE id_number = ?";
-        $stmt = $this->connection->prepare($sql);
-
-        if($stmt){
-         $stmt ->bind_param("i", $id_number);
-
-         if($stmt->execute()){
-            $LOCATION = "/System/Web-Systems-Finals-Project/FRONTEND/Admin_page.php";
-            header("Location:$LOCATION");
-            exit();
-         }
-        } 
+    if (!isset($_POST['id']) || empty($_POST['id'])) {
+        echo "No ID provided.";
+        return;
     }
+
+    $id = intval($_POST['id']);
+
+    $sql = "DELETE FROM users WHERE id_number = ?";
+    $stmt = $this->connection->prepare($sql);
+
+    if ($stmt) {
+        $stmt->bind_param("i", $id);
+
+        if ($stmt->execute()) {
+            $LOCATION = "/System/Web-Systems-Finals-Project/FRONTEND/Admin_page.php";
+            header("Location: $LOCATION");
+            exit();
+        } else {
+            echo "Error executing delete query.";
+        }
+    } else {
+        echo "Failed to prepare delete statement.";
+    }
+}
+
 
     //anti-dupe func
     public function dupeEmail($email) {

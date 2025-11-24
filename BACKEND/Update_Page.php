@@ -35,7 +35,7 @@ $user_get = $controller->take_info_by_id($_GET['id']);
     <!-- Main Content -->
     <div class="floating-window">
         <h2 class="text-center mb-4">Update User</h2>
-        <form action="/System/BACKEND/Controller.php?method_finder=update" method="post" class="mb-4">
+        <form action="/System/Web-Systems-Finals-Project/BACKEND/Controller.php?method_finder=update" method="post" class="mb-4">
             <input type="hidden" value="<?=htmlspecialchars($user_get['id'])?>" name="id">
 
             <label for="fullName">Full Name:</label>
