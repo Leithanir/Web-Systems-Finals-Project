@@ -71,14 +71,15 @@ class Controller{
         $updatedRole = $_POST['newRole'];
         $updatedCourse = $_POST['newCourse'];
         $updatedYear = $_POST['newYear'];
+        $updatedSection = $_POST['newSection'];
 
         //if our id is not null
-        if($id === ''){
+        if($id){
             $sql = "UPDATE users SET full_name = ?, email = ?, role = ?, course = ?, year = ?, section = ? WHERE id_number = ?";
             $stmt = $this->connection->prepare($sql);
 
             if($stmt){
-                $stmt->bind_param("sssssi", $updatedFullName, $updatedEmail, $updatedRole, $updatedCourse, $updatedYear, $id);
+                $stmt->bind_param("ssssssi", $updatedFullName, $updatedEmail, $updatedRole, $updatedCourse, $updatedYear, $updatedSection, $id);
 
                 if($stmt->execute()){
                     $location = "/System/Web-Systems-Finals-Project/FRONTEND/Admin_page.php";
