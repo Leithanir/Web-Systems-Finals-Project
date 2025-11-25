@@ -1,6 +1,5 @@
 <?php
-include("../BACKEND/Controller.php");
-include("../FRONTEND/Admin_page.php");
+
 
 ?>
 

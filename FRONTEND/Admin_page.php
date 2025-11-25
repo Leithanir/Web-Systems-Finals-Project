@@ -3,6 +3,13 @@ include("../BACKEND/Controller.php");
 $controller = new Controller();
 $users = $controller->read_all();
 $counts = $controller->roleCount();
+$roleFilter = $_GET['role'] ?? 'all';
+
+if ($roleFilter === 'all') {
+    $users = $controller->read_all();
+} else {
+    $users = $controller->filter($roleFilter);
+}
 ?>
 
 
@@ -132,9 +139,10 @@ $counts = $controller->roleCount();
 
             <div class="users-tabs-container">
                 <div class="users-tabs">
-                    <button class="tab-button" data-role="admin">Admin</button>
-                    <button class="tab-button" data-role="teacher">Teacher</button>
-                    <button class="tab-button" data-role="student">Student</button>
+                    <a href="Admin_page.php?role=admin"><button class="tab-button">Admin</button></a>
+                    <a href="Admin_page.php?role=teacher"><button class="tab-button">Teacher</button></a>
+                    <a href="Admin_page.php?role=student"><button class="tab-button">Student</button></a>
+                    <a href="Admin_page.php?role=all"><button class="tab-button">All Users</button></a>
                 </div>
                 <select id="classSectionSelect" >
                     <option value="all" selected>All Sections</option>

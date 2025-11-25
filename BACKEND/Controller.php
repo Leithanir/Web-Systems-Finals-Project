@@ -8,6 +8,7 @@ class Controller{
         $this->connection = $this->create_connection();
     }
 
+   
     public function create_connection(){
         // Server name , User , password, database name
         if(!defined('DB_HOST')){
@@ -131,6 +132,22 @@ class Controller{
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
+    //role filtering
+    public function filter($role) {
+        if ($role == "all"){
+            return $this->read_all();
+        }
+        else{
+            $sql = "SELECT * FROM users WHERE role = ? ORDER BY role ASC";
+            $stmt = $this->connection->prepare($sql);
+            $stmt->bind_param("s", $role);
+        }
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+
+    }
+
     //update func
     public function update(){
         $id = $_POST['id'];
@@ -181,7 +198,7 @@ class Controller{
         exit();
     }
 
-   /*idk wtf this is for 
+   //fetch user info by id
    public function take_info_by_id($id_number){
         $sql = "SELECT * FROM users WHERE id_number = ?";
         $stmt = $this->connection->prepare($sql);
@@ -199,7 +216,7 @@ class Controller{
         else{
             echo "the statement / connection is wrong";
         }
-    }*/
+    }
 
     //delete function    
     public function delete(){
