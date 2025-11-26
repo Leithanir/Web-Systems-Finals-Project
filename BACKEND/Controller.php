@@ -244,15 +244,52 @@ class Controller{
         echo "Failed to prepare delete statement.";
     }
 }
+    //queue for pending requests
+    private $pendingRequests = [];
 
-    //login page func test
-    //register
-    public function register($idnumber, $email, $password, $role){
-        
-
+    public function pushPendingRequest($request) {
+        array_push($this->pendingRequests, $request);
     }
     
+    //finished requests
+    public function doneRequests() {
+        if(!empty($this->pendingRequests)){
+            return array_shift($this->pendingRequests);
+        }
+    }
+
+    //bst search func
+   public function BSTlogic($root, $user) {
+    if ($root === null) {
+        return ["data" => $user, "left" => null, "right" => null];
+    }
+
+    if ($user['id_number'] < $root['data']['id_number']) {
+        $root['left'] = $this->BSTlogic($root['left'], $user);
+    } else {
+        $root['right'] = $this->BSTlogic($root['right'], $user);
+    }
+
+    return $root;
 }
+    public function BSTSearchID($root, $id){
+        if ($root === null){
+            return null;
+        }
+        if ($root['data']['id_number'] == $id){
+            return $root['data'];
+        }
+        if ($id < $root['data']['id_number']){
+            return $this->BSTSearchID($root['left'], $id);
+        } else {
+            return $this->BSTSearchID($root['right'], $id);
+        }
+    }
+
+   
+}
+    
+
 
 
 $controller  = new Controller();

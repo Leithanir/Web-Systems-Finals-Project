@@ -10,6 +10,30 @@ if ($roleFilter === 'all') {
 } else {
     $users = $controller->filter($roleFilter);
 }
+$activeSection = 'dashboard';
+
+if (!empty($_GET['role']) || !empty($_GET['search_id'])) {
+    $activeSection = 'users';
+}
+
+$BSTUsers = $controller ->read_all();
+$BSTRoot = null;
+foreach($BSTUsers as $user){
+    $BSTRoot = $controller->BSTlogic($BSTRoot,  $user);
+}
+$searchID = $_GET['search_id'] ?? '';
+
+if ($searchID !== '') {
+    $searchIDInt = intval($searchID);
+
+    $foundUser = $controller->BSTSearchID($BSTRoot, $searchIDInt);
+
+    if ($foundUser) {
+        $users = [$foundUser]; 
+    } else {
+        $users = []; 
+    }
+}
 ?>
 
 
@@ -90,7 +114,7 @@ if ($roleFilter === 'all') {
     <main class="main-dashboard-content" id="mainContent">
 
         <!-- DASHBOARD SECTION -->
-        <section id="dashboardSection" class="content-section">
+        <section id="dashboardSection" class="content-section" style="<?= $activeSection === 'dashboard' ? '' : 'display:none;' ?>">
             <h1>Dashboard</h1>
             <div class="summary-cards">
                 <div class="card">
@@ -130,11 +154,15 @@ if ($roleFilter === 'all') {
         </section>
 
         <!-- USERS SECTION -->
-        <section id="usersSection" class="content-section users-section" style="display:none;">
+        <section id="usersSection" class="content-section users-section" style="<?= $activeSection === 'users' ? '' : 'display:none;' ?>">
             <h1 class="section-title">Manage Users</h1>
 
             <div class="search-bar-container">
-                <input type="text" id="usersSearchInput" placeholder="Search users...">
+                <form method="GET" action="Admin_page.php">
+                    <input type="text" name="search_id" placeholder="Search by ID Number" value="<?= htmlspecialchars($_GET['search_id'] ?? '') ?>">
+                    <input type="hidden" name="role" value="<?= htmlspecialchars($roleFilter) ?>"> <!-- keep role filter -->
+                <button type="submit">Search</button>
+                </form>
             </div>
 
             <div class="users-tabs-container">
